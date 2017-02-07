@@ -31,8 +31,16 @@ public class RxTwitterApplication {
             ReactiveCamel rx = new ReactiveCamel(camelContext);
             rx.Observable<Message> observable = rx.toObservable("direct:out");
             //@formatter:off
-            observable.map(t->t.getBody(Status.class)).subscribe(status -> {                         
-                log.info("createdAt : {}, location: {},lang : {} , user : {}, text : {}",
+            observable.map(t->t.getBody(Status.class)).filter(s-> s.getLang().equals("en") || s.getLang().equals("pl") ).subscribe(status -> {                         
+                log.info("[JAVA ] : createdAt : {}, location: {},lang : {} , user : {}, text : {}",
+                        status.getCreatedAt(),status.getGeoLocation(),status.getLang(),status.getUser().getEmail(),status.getText());
+                log.info("{}",status.getUser().getBiggerProfileImageURLHttps());
+                
+            });
+            
+            rx.Observable<Message> observableSpring = rx.toObservable("direct:outSpring");
+            observableSpring.map(t->t.getBody(Status.class)).filter(s-> s.getLang().equals("en") || s.getLang().equals("pl") ).subscribe(status -> {                         
+                log.info("[Spring] :  createdAt : {}, location: {},lang : {} , user : {}, text : {}",
                         status.getCreatedAt(),status.getGeoLocation(),status.getLang(),status.getUser().getEmail(),status.getText());
                 log.info("{}",status.getUser().getBiggerProfileImageURLHttps());
                 

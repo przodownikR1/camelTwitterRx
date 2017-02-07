@@ -4,10 +4,12 @@ import java.net.URLEncoder;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TwitterRoute extends RouteBuilder {
+@PropertySource("classpath:twitter.properties")
+public class TwitterRouteJava extends RouteBuilder {
     @Value("${twitter.consumerKey}")
     String twitterConsumerKey;
     @Value("${twitter.consumerSecret}")
