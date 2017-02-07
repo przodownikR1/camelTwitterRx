@@ -1,0 +1,74 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+jar {
+	baseName = 'rxTwitter'
+	version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-starter-cache')
+	compile('org.apache.camel:camel-spring-boot-starter:2.18.2')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.data:spring-data-rest-hal-browser')
+	compile('org.springframework.boot:spring-boot-starter-hateoas')
+	compile('org.springframework.retry:spring-retry')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	runtime('org.springframework.boot:spring-boot-devtools')
+	runtime('com.h2database:h2')
+    compile 'com.google.guava:guava:20.+'
+	compile('org.springframework.boot:spring-boot-configuration-processor')
+	compile('org.projectlombok:lombok')
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.5.0'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.5.0'
+    // https://mvnrepository.com/artifact/org.apache.camel/camel-twitter
+    compile group: 'org.apache.camel', name: 'camel-twitter', version: '2.18.1'
+    // https://mvnrepository.com/artifact/org.apache.camel/camel-rx
+    // https://mvnrepository.com/artifact/org.apache.camel/camel-stream
+    compile group: 'org.apache.camel', name: 'camel-stream', version: '2.18.1'
+    
+    compile group: 'org.apache.camel', name: 'camel-rx', version: '2.18.1'
+    
+    compile group: 'io.javaslang', name: 'javaslang', version: '2.0.5'
+    compile group: 'io.javaslang', name: 'javaslang-match', version: '2.0.5'
+    compile group: 'io.reactivex', name: 'rxjava', version: '1.2.3'
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+    
+    bootRun {
+        if (System.properties.containsKey('spring.profiles.active')) {
+            systemProperty "spring.profiles.active", System.properties['spring.profiles.active']
+        }
+
+        def stdOpts = ['-Dfile.encoding=UTF8', '-Xms128m', '-Xmx256m' ,'-XX:+UseG1GC']
+        def gcOpts = ['-verbose:gc','-XX:+PrintGCDetails', '-XX:+PrintHeapAtGC',
+                    '-XX:+PrintGCDateStamps', '-XX:+PrintTenuringDistribution',
+                    '-XX:+PrintClassHistogram', '-Xloggc:gc.log']
+
+        jvmArgs = stdOpts + gcOpts
+
+        if ( project.hasProperty('jvmArgs') ) {
+            jvmArgs project.jvmArgs.split('\\s+')
+        }
+    }
+}
