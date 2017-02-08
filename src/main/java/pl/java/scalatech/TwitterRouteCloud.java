@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @PropertySource("classpath:twitter.properties")
-public class TwitterRouteSpring extends RouteBuilder {
+public class TwitterRouteCloud extends RouteBuilder {
 	@Value("${twitter.consumerKey}")
 	String twitterConsumerKey;
 	@Value("${twitter.consumerSecret}")
@@ -27,8 +27,8 @@ public class TwitterRouteSpring extends RouteBuilder {
 							+ "consumerSecret={{twitter.consumerSecret}}&"
 							+ "accessToken={{twitter.accessToken}}&"
 							+ "accessTokenSecret={{twitter.accessTokenSecret}}&"
-					+ "keywords="+ URLEncoder.encode("javv spring", "utf8");
-			from(twitter).to("direct:outSpring");
+					+ "keywords="+ URLEncoder.encode("java cloud", "utf8");
+			from(twitter).to("direct:outCloud");
 		 //  @formatter:on
 	}
 
