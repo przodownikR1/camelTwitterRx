@@ -27,9 +27,9 @@ public class TwitterRouteSpring extends RouteBuilder {
 							+ "consumerSecret={{twitter.consumerSecret}}&"
 							+ "accessToken={{twitter.accessToken}}&"
 							+ "accessTokenSecret={{twitter.accessTokenSecret}}&"
-					+ "keywords="+ URLEncoder.encode("javv spring", "utf8");
+					+ "keywords="+ URLEncoder.encode("java spring", "utf8");
 			from(twitter).to("direct:outSpring");
-		 //  @formatter:on
+		//  @formatter:on
 	}
 
 }

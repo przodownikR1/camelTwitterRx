@@ -27,9 +27,9 @@ public class TwitterRouteJava extends RouteBuilder {
 							+ "consumerSecret={{twitter.consumerSecret}}&"
 							+ "accessToken={{twitter.accessToken}}&"
 							+ "accessTokenSecret={{twitter.accessTokenSecret}}&"
-					+ "keywords="+ URLEncoder.encode("camel", "utf8");
-			from(twitter).to("direct:outCamel");
-		 //  @formatter:on
+					+ "keywords="+ URLEncoder.encode("java", "utf8");
+			from(twitter).to("direct:outJava");
+		//  @formatter:on
 	}
 
 }

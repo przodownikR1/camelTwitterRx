@@ -29,7 +29,7 @@ public class RxTwitterApplication {
 		return args -> {
 
 			ReactiveCamel rx = new ReactiveCamel(camelContext);
-			rx.Observable<Message> observable = rx.toObservable("direct:out");
+			rx.Observable<Message> observable = rx.toObservable("direct:outJava");
 			//@formatter:off
 			observable.map(t->t.getBody(Status.class)).filter(s-> s.getLang().equals("en") || s.getLang().equals("pl") ).subscribe(status -> {
 				log.info("[JAVA ] : createdAt : {}, location: {},lang : {} , user : {}, text : {}",
